@@ -4,7 +4,7 @@
 #Time: 1 minute
 #Description: Make a file
 
-COMPILER = g++
+COMPILER = g++ -std=c++20
 OPTIONS = -Wall
 PROGRAM = main.out
 

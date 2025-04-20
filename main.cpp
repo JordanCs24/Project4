@@ -13,8 +13,6 @@
 #include "RecommendationSystem.h"
 
 using namespace std;
-void eraseAColumn(string &name);
-void eraseAComma(string &course);
 
 int main(int argc, char* argv[]){
 
@@ -26,7 +24,10 @@ int main(int argc, char* argv[]){
     RecommendationSystem Test;
     cout << "Welcome to Course Recommender!" << endl;
     Test.loadData(argv[1]);
+    fs >> studentName;
     
+    //Test.generateRecommendationsForStudent("Bob");
+    Test.getTotalStudents();
 
     return 0;
 }

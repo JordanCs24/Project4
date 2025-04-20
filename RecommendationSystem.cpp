@@ -16,20 +16,19 @@ void RecommendationSystem::loadData(const string& filename){
         course2.erase(remove(course2.begin(), course2.end(),',')); // removes the ',' character
         course3.erase(remove(course3.begin(), course3.end(),',')); // removes the ',' character
 
-        cout << "Courses: " << course1 << " " << course2 << " " << course3 << endl;
         courses.insert(course1); // Adds the courses to the set
         courses.insert(course2);
         courses.insert(course3);
-        Student *recommendStudent = new Student(studentName);
-        recommendStudent->addRecommendation(course1);
-        recommendStudent->addRecommendation(course2);
-        recommendStudent->addRecommendation(course3);
-// Add a student object with allocated memory to create a student object
-        students.emplace(studentName,recommendStudent);
-        delete recommendStudent;
-    }
 
+        Student studentHolder(studentName);
+        studentHolder.addRecommendation(course1);
+        studentHolder.addRecommendation(course2);
+        studentHolder.addRecommendation(course3);
+
+        students.emplace(studentName, studentHolder);
+    }
 }
+
 
 vector<string> RecommendationSystem::generateRecommendationsForStudent(const string& studentName) const{
 /*
@@ -37,10 +36,17 @@ vector<string> RecommendationSystem::generateRecommendationsForStudent(const str
     By popularity (descending).
     Alphabetically for ties.
 */
+// Takes a student’s name and returns their list of recommended courses, sorted by popularity and alphabetically for ties.
+    vector<string>recommendations = students.at(studentName).getRecommendations();
+
+    sort(recommendations.begin(),recommendations.end());
+
+    return recommendations;
 
 }
 
 void RecommendationSystem::outputRecommendations(ostream& out) const{
+    
     /*
 Alice: [CPSC102, CPSC301]
 
@@ -56,10 +62,11 @@ Total Courses: 5
 
 Total Recommendations: 6
     */
-   
-    for (auto &i : students){
-        out << i.first() << ": " << "[" << i.second.getRecommendations().at() << "]" <<endl;
+/*  for (auto &i : students){
+        vector<string> randomVec = i.second.getRecommendations();
+        out << i.second.getName() << ": " << "[" << i.second.getRecommendations() << "]" << endl;
     }
+    */
 }
 
  
@@ -67,7 +74,11 @@ Total Recommendations: 6
 // Testing methods
 
 int RecommendationSystem::getTotalStudents() const{
-    return students.size();
+    int studentCount = 0;
+    for(auto i : students){
+        studentCount++;
+    }
+    return studentCount;
 }
 
 int RecommendationSystem::getTotalCourses() const{
@@ -75,5 +86,6 @@ int RecommendationSystem::getTotalCourses() const{
 }
 
 int RecommendationSystem::getTotalRecommendations() const{
-    return 1;
+    //Returns the total number of recommendations generated (sum of all recommendation lists).
+    return courses.size();
 }

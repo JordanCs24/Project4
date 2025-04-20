@@ -10,6 +10,7 @@ Description: Represents a student and their recommended courses
 
 #include <string>
 #include <vector>
+#include <algorithm>
 #include "Course.h"
 
 using namespace std;

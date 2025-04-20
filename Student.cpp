@@ -14,8 +14,9 @@ string Student::getName() const{
 
 void Student::addRecommendation(const string& course){
     recommendedCourses.push_back(course);
+    
 }
 
-vector<string> Student::getRecommendations() const{ // Sorted and limited to 3.
+vector<string> Student::getRecommendations() const{ // Sorted and limited to 3. 
     return recommendedCourses;
 }

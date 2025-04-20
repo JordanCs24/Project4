@@ -11,7 +11,9 @@ Description: header file for class recommendationSystem. It Manages students, co
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <algorithm>
 #include <string>
+#include <sstream>
 #include <map>
 #include <set>
 #include <vector>
@@ -33,8 +35,6 @@ public:
     vector<string> generateRecommendationsForStudent(const string& studentName) const;
 
     void outputRecommendations(ostream& out) const;
-
- 
 
     // Testing methods
 
