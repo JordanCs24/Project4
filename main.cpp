@@ -17,6 +17,7 @@ using namespace std;
 int main(int argc, char* argv[]){
 
     ifstream fs;
+    ostream output;
     string studentName;
     string courses;
     string line;
@@ -28,6 +29,7 @@ int main(int argc, char* argv[]){
     
     //Test.generateRecommendationsForStudent("Bob");
     Test.getTotalStudents();
+    Test.outputRecommendations(output);
 
     return 0;
 }

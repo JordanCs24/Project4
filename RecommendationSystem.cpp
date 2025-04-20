@@ -3,27 +3,27 @@
 void RecommendationSystem::loadData(const string& filename){
     ifstream fs;
     string studentName;
-    string course1, course2, course3;
+    string line;
+    string course;
     fs.open(filename);
     if(!fs.is_open()){
         cout << "Couldn't open: " << filename;
     }
-    while(fs >> studentName && fs >> course1 && fs >> course2 && fs >> course3){
+    while(fs.good()){
+        getline(fs,line);
+
+        istringstream strLine(line);
+        strLine >> studentName;
 
         studentName.erase(remove(studentName.begin(), studentName.end(),':')); // removes the ':' character
-        
-        course1.erase(remove(course1.begin(), course1.end(),',')); // removes the ',' character
-        course2.erase(remove(course2.begin(), course2.end(),',')); // removes the ',' character
-        course3.erase(remove(course3.begin(), course3.end(),',')); // removes the ',' character
-
-        courses.insert(course1); // Adds the courses to the set
-        courses.insert(course2);
-        courses.insert(course3);
 
         Student studentHolder(studentName);
-        studentHolder.addRecommendation(course1);
-        studentHolder.addRecommendation(course2);
-        studentHolder.addRecommendation(course3);
+
+        while(strLine >> course){
+            course.erase(remove(course.begin(), course.end(),','));
+            courses.insert(course);
+            studentHolder.addRecommendation(course);
+        }
 
         students.emplace(studentName, studentHolder);
     }
@@ -62,11 +62,16 @@ Total Courses: 5
 
 Total Recommendations: 6
     */
-/*  for (auto &i : students){
-        vector<string> randomVec = i.second.getRecommendations();
-        out << i.second.getName() << ": " << "[" << i.second.getRecommendations() << "]" << endl;
-    }
-    */
+    vector<string> randomVec;
+
+   for(auto &it : students){
+        randomVec = it.second.getRecommendations();
+        out << it.second.getName() << ": [";
+        for(auto &i : randomVec){
+            out << i << ", ";
+        }
+        out << "]" << endl;
+   }
 }
 
  
